@@ -24,13 +24,22 @@ public class NotificationProducer {
     RabbitMQMetadataFactory metadataFactory;
 
     public void sendWithMetadata(NotificationRequest request) {
-        metadataFactory.enrichWithMetadata(request);
+        try {
+            metadataFactory.enrichWithMetadata(request);
 
-        log.info("Отправка в RabbitMQ: ID=%s, Routing=%s",
-                request.getId(), request.getRoutingKey());
-        emitter.send(request);
+            log.info("Sending to RabbitMQ. ID: {}, Routing: {}, Correlation: {}",
+                    request.getId(),
+                    request.getRoutingKey(),
+                    request.getCorrelationId());
 
-        log.info("✅ Отправлено: %s", request.getId());
+            emitter.send(request);
+
+            log.info("Sent. ID: {}", request.getId());
+
+        } catch (Exception e) {
+            log.error("Error sending {}: {}", request.getId(), e.getMessage());
+            throw e;
+        }
     }
 
     private String generateMessageId(org.dto.enums.NotificationType type) {
