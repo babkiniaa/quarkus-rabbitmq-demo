@@ -17,7 +17,6 @@ public class NotificationResponse {
     private String message;
     private LocalDateTime timestamp;
     private LocalDateTime processedAt;
-
     private String queueName;
     private String routingKey;
 
