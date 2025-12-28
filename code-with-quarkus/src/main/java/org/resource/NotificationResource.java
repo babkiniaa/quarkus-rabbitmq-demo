@@ -1,15 +1,16 @@
 package org.resource;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.dto.NotificationRequest;
 import org.dto.NotificationResponse;
 import org.service.NotificationService;
-
-import java.util.Map;
 
 @Slf4j
 @Path("/api/notifications")
@@ -27,22 +28,4 @@ public class NotificationResource {
         return Response.status(202).entity(response).build();
     }
 
-    @GET
-    @Path("/test")
-    public Response test() {
-        Map<String, Object> response = notificationService.createTestResponse();
-        return Response.ok(response).build();
-    }
-
-    @GET
-    @Path("/health")
-    public Response health() {
-        return Response.ok(notificationService.checkHealth()).build();
-    }
-
-    @GET
-    @Path("/types")
-    public Response types() {
-        return Response.ok(notificationService.getNotificationTypes()).build();
-    }
 }
