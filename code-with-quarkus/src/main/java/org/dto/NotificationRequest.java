@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.dto.enums.NotificationType;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -29,6 +31,18 @@ public class NotificationRequest {
     private String message;
 
     private String priority = "NORMAL";
-
     private LocalDateTime timestamp;
+
+    private String routingKey;
+    private String correlationId;
+    private Long ttl;
+    private Map<String, Object> headers = new HashMap<>();
+
+    private String businessId;
+    private String category;
+
+    private String traceId;
+    private String source = "bunny-notifier";
+    private boolean urgent = false;
+    private boolean requireReceipt = false;
 }
